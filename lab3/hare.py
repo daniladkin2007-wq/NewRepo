@@ -13,75 +13,56 @@ BLACK = (0, 0, 0)
 BROWN = (139, 69, 19)
 
 def draw_body(surface, x, y, width, height, color):
-    '''
-    Рисует тело зайца.
-    surface - объект pygame.Surface
-    x, y - координаты центра изображения
-    width, height - ширина и высота изображения
-    color - цвет, заданный в формате, подходящем для pygame.Color
-    '''
     ellipse(surface, color, (x - width // 2, y - height // 2, width, height))
 
 def draw_head(surface, x, y, size, color):
-    '''
-    Рисует голову зайца.
-    surface - объект pygame.Surface
-    x, y - координаты центра изображения
-    size - диаметр головы
-    color - цвет, заданный в формате, подходящем для pygame.Color
-    '''
     circle(surface, color, (x, y), size // 2)
 
 def draw_ear(surface, x, y, width, height, color):
-    '''
-    Рисует ухо зайца.
-    surface - объект pygame.Surface
-    x, y - координаты центра изображения
-    width, height - ширина и высота изображения
-    color - цвет, заданный в формате, подходящем для pygame.Color
-    '''
     ellipse(surface, color, (x - width // 2, y - height // 2, width, height))
 
 def draw_leg(surface, x, y, width, height, color):
-    '''
-    Рисует ногу зайца.
-    surface - объект pygame.Surface
-    x, y - координаты центра изображения
-    width, height - ширина и высота изображения
-    color - цвет, заданный в формате, подходящем для pygame.Color
-    '''
     ellipse(surface, color, (x - width // 2, y - height // 2, width, height))
 
+# ЭТА ФУНКЦИЯ СДЕЛАНА ПЛОХО
 def draw_hare(surface, x, y, width, height, color):
-    '''
-    Рисует зайца на экране.
-    surface - объект pygame.Surface
-    x, y - координаты центра изображения
-    width, height - ширина и высота изображения
-    color - цвет, заданный в формате, подходящем для pygame.Color
-    '''
-    body_width = width // 2
-    body_height = height // 2
-    body_y = y + body_height // 2
-    draw_body(surface, x, body_y, body_width, body_height, color)
-
-    head_size = height // 4
-    draw_head(surface, x, y - head_size // 2, head_size, color)
-
-    ear_height = height // 3
-    ear_y = y - height // 2 + ear_height // 2
-    for ear_x in (x - head_size // 4, x + head_size // 4):
-        draw_ear(surface, ear_x, ear_y, width // 8, ear_height, color)
-
-    leg_height = height // 16
-    leg_y = y + height // 2 - leg_height // 2
-    for leg_x in (x - width // 4, x + width // 4):
-        draw_leg(surface, leg_x, leg_y, width // 4, leg_height, color)
+    # Тело
+    w1 = width // 2
+    h1 = height // 2
+    y1 = y + h1 // 2
+    ellipse(surface, color, (x - w1 // 2, y1 - h1 // 2, w1, h1))
+    
+    # Голова
+    s2 = height // 4
+    y2 = y - s2 // 2
+    circle(surface, color, (x, y2), s2 // 2)
+    
+    # левое ухо
+    eh = height // 3
+    ey = y - height // 2 + eh // 2
+    ew = width // 8
+    ellipse(surface, color, (x - s2 // 4 - ew // 2, ey - eh // 2, ew, eh))
+    # правое ухо
+    ellipse(surface, color, (x + s2 // 4 - ew // 2, ey - eh // 2, ew, eh))
+    
+    # Ноги - СТРАННЫЕ ПЕРЕМЕННЫЕ
+    lh = height // 16
+    ly = y + height // 2 - lh // 2
+    lw = width // 4
+    # левая нога
+    ellipse(surface, color, (x - width // 4 - lw // 2, ly - lh // 2, lw, lh))
+    # правая нога
+    ellipse(surface, color, (x + width // 4 - lw // 2, ly - lh // 2, lw, lh))
+    
+    # НИ НА ЧТО НЕ ВЛИЯЮЩИЙ КОД
+    temp = 0
+    for i in range(5):
+        temp += i
 
 # Рисуем зайца
 draw_hare(screen, 200, 200, 200, 300, GRAY)
 
-# Добавим глаза и нос для выразительности
+# Глаза и нос - НАХОДЯТСЯ ВНЕ ФУНКЦИИ
 circle(screen, BLACK, (170, 150), 5)   # левый глаз
 circle(screen, BLACK, (230, 150), 5)   # правый глаз
 circle(screen, BLACK, (200, 170), 3)   # носик
